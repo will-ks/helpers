@@ -31,7 +31,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "helpers",
+  "name": "@will-ks/helpers",
   "author": "will-ks",
   "module": "dist/helpers.esm.js",
   "size-limit": [
