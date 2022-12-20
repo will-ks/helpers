@@ -1,5 +1,5 @@
 export const wait = (ms: number) =>
-  new Promise((resolve) => setTimeout(resolve, ms))
+  new Promise(resolve => setTimeout(resolve, ms));
 
 export const doWithCancellableTimeout = async (
   onTimeout: () => void,
@@ -7,38 +7,38 @@ export const doWithCancellableTimeout = async (
   timeout: number,
   nextInterval = 0
 ): Promise<void> => {
-  cancellationToken.checkStateAndThrowIfCancelled()
+  cancellationToken.checkStateAndThrowIfCancelled();
   if (nextInterval >= timeout) {
-    return onTimeout()
+    return onTimeout();
   }
-  await wait(1_000)
+  await wait(1_000);
   return doWithCancellableTimeout(
     onTimeout,
     cancellationToken,
     timeout,
     nextInterval - 1_000
-  )
-}
+  );
+};
 
 export class PromiseCancellationToken {
-  private cancelled = false
-  private readonly message: string
+  private cancelled = false;
+  private readonly message: string;
 
   constructor(message?: string) {
-    this.message = message || 'PromiseCancellationToken cancelled'
+    this.message = message || 'PromiseCancellationToken cancelled';
   }
 
   checkStateAndThrowIfCancelled() {
     if (this.isCancelled()) {
-      throw new Error(this.message)
+      throw new Error(this.message);
     }
   }
 
   isCancelled() {
-    return this.cancelled
+    return this.cancelled;
   }
 
   cancel() {
-    this.cancelled = true
+    this.cancelled = true;
   }
 }
