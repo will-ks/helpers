@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bccc18c1-117c-4c01-bc8f-b5b67639e4d3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/array-helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/array-helpers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classnames.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classnames.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/number-helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/number-helpers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/object-helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/object-helpers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/retry-helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/retry-helpers.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/string-helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/string-helpers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/timeout-helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/timeout-helpers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/type-helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/type-helpers.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

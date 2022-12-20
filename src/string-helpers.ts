@@ -17,3 +17,11 @@ export const throwIfMissing = (name: string, value?: string) => {
   }
   return value;
 };
+
+export const toCamelCase = (string: string) =>
+  (string.slice(0, 1).toLowerCase() + string.slice(1))
+    .replace(/([-_ ]){1,}/g, ' ')
+    .split(/[-_ ]/)
+    .reduce((cur, acc) => {
+      return cur + acc[0].toUpperCase() + acc.substring(1);
+    });
