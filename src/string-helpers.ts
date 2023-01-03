@@ -5,7 +5,12 @@ export const getRandomString = (length?: number) =>
 
 export const toTitleCase = (str: string) =>
   str.replace(/\w\S*/g, function(txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    return (
+      txt
+        .trim()
+        .charAt(0)
+        .toUpperCase() + txt.substr(1).toLowerCase()
+    );
   });
 
 export const capitalizeFirstLetter = (str: string) =>
@@ -19,7 +24,12 @@ export const throwIfMissing = (name: string, value?: string) => {
 };
 
 export const toCamelCase = (string: string) =>
-  (string.slice(0, 1).toLowerCase() + string.slice(1))
+  (
+    string
+      .trim()
+      .slice(0, 1)
+      .toLowerCase() + string.slice(1)
+  )
     .replace(/([-_ ]){1,}/g, ' ')
     .split(/[-_ ]/)
     .reduce((cur, acc) => {
