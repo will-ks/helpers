@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bccc18c1-117c-4c01-bc8f-b5b67639e4d3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/string-helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/string-helpers.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

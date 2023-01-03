@@ -9,7 +9,7 @@ export const toTitleCase = (str: string) =>
       txt
         .trim()
         .charAt(0)
-        .toUpperCase() + txt.substr(1).toLowerCase()
+        .toUpperCase() + txt.substring(1).toLowerCase()
     );
   });
 
