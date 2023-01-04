@@ -16,13 +16,6 @@ export const toTitleCase = (str: string) =>
 export const capitalizeFirstLetter = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
-export const throwIfMissing = (name: string, value?: string) => {
-  if (!value) {
-    throw new Error(`Missing env variable ${name}`);
-  }
-  return value;
-};
-
 export const toCamelCase = (string: string) =>
   (
     string
