@@ -2,13 +2,19 @@ import pipeNow from '@arrows/composition/pipeNow';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 
-export const getApiClient = (
-  apiName: string,
-  config: AxiosRequestConfig,
+export const getApiClient = ({
+  apiName,
+  config,
+  logger,
+  transformError,
+}: {
+  apiName: string;
+  config: AxiosRequestConfig;
   logger?: {
     error: (...error: unknown[]) => void;
-  }
-) =>
+  };
+  transformError?: <T extends Error>(error: AxiosError) => T;
+}) =>
   pipeNow(
     axios.create({
       timeout: 10_000,
@@ -55,7 +61,7 @@ export const getApiClient = (
               `${apiName} API error, error requesting`
             );
           }
-          return Promise.reject(error);
+          return Promise.reject(transformError ? transformError(error) : error);
         }
       );
       return axios;
