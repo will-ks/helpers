@@ -2,7 +2,7 @@ import pipeNow from '@arrows/composition/pipeNow';
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 
-export class ApiError extends Error {
+export class ApiError extends AxiosError {
   axiosError: AxiosError;
   name = 'ApiError';
   isServerProvidedError?: boolean;
@@ -23,6 +23,11 @@ export class ApiError extends Error {
       'unknown url'} ${JSON.stringify(this.axiosError)}`;
   }
 }
+
+type InternalApiError = ApiError;
+
+export const isApiError = (toCheck: unknown): toCheck is InternalApiError =>
+  axios.isAxiosError(toCheck);
 
 export const getApiClient = <T extends Error>({
   apiName,
