@@ -2,6 +2,28 @@ import pipeNow from '@arrows/composition/pipeNow';
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 
+export class ApiError extends Error {
+  axiosError: AxiosError;
+  name = 'ApiError';
+  isServerProvidedError?: boolean;
+  isNetworkError?: boolean;
+  isServerError?: boolean;
+  statusCode?: number;
+
+  constructor(error: AxiosError) {
+    super();
+    this.axiosError = error;
+    const { response, request, stack, config } = error;
+    this.isServerProvidedError = response && true; // client received an error response (5xx, 4xx)
+    this.isNetworkError = request && !response; // client never received a response, or request never left
+    this.stack = stack;
+    this.statusCode = response?.status;
+    this.isServerError = this.statusCode ? this.statusCode >= 500 : undefined;
+    this.message = `${response?.status || 'Network error'} at ${config?.url ??
+      'unknown url'} ${JSON.stringify(this.axiosError)}`;
+  }
+}
+
 export const getApiClient = <T extends Error>({
   apiName,
   config,
@@ -13,7 +35,7 @@ export const getApiClient = <T extends Error>({
   logger?: {
     error: (...error: unknown[]) => void;
   };
-  transformError?: (error: AxiosError) => T;
+  transformError?: (error: ApiError) => T;
 }): AxiosInstance =>
   pipeNow(
     axios.create({
@@ -61,7 +83,10 @@ export const getApiClient = <T extends Error>({
               `${apiName} API error, error requesting`
             );
           }
-          return Promise.reject(transformError ? transformError(error) : error);
+          const apiError = new ApiError(error);
+          return Promise.reject(
+            transformError ? transformError(apiError) : apiError
+          );
         }
       );
       return axios;
