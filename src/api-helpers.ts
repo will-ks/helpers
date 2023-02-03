@@ -24,10 +24,8 @@ export class ApiError extends Error {
   }
 }
 
-type InternalApiError = ApiError;
-
-export const isApiError = (toCheck: unknown): toCheck is InternalApiError =>
-  axios.isAxiosError(toCheck);
+export const isApiError = (toCheck: unknown): toCheck is ApiError =>
+  axios.isAxiosError((toCheck as ApiError)?.axiosError);
 
 export const getApiClient = <T extends Error>({
   apiName,
