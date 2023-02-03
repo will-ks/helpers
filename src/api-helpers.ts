@@ -2,7 +2,7 @@ import pipeNow from '@arrows/composition/pipeNow';
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 
-export class ApiError extends AxiosError {
+export class ApiError extends Error {
   axiosError: AxiosError;
   name = 'ApiError';
   isServerProvidedError?: boolean;
@@ -11,7 +11,7 @@ export class ApiError extends AxiosError {
   statusCode?: number;
 
   constructor(error: AxiosError) {
-    super();
+    super(error.message);
     this.axiosError = error;
     const { response, request, stack, config } = error;
     this.isServerProvidedError = response && true; // client received an error response (5xx, 4xx)
