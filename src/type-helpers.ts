@@ -1,10 +1,9 @@
 export const getEnumTypeGuard = <
-  T extends string,
-  TEnumValue extends string | number
+  T extends { [s: string]: unknown } | ArrayLike<unknown>
 >(
-  enumVariable: { [key in T]: TEnumValue }
-) => (token: unknown): token is T[keyof T] =>
-  Object.values(enumVariable).includes(token);
+  e: T
+) => (toCheck: unknown): toCheck is T[keyof T] =>
+  Object.values(e).includes(toCheck as T[keyof T]);
 
 export type UnknownObject =
   // all types which have typeof === 'object'
