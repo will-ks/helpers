@@ -1,9 +1,7 @@
-export const getEnumTypeGuard = <
-  T extends { [s: string]: unknown } | ArrayLike<unknown>
->(
-  e: T
-) => (toCheck: unknown): toCheck is T[keyof T] =>
-  Object.values(e).includes(toCheck as T[keyof T]);
+export const getEnumTypeGuard =
+  <T extends { [s: string]: unknown } | ArrayLike<unknown>>(e: T) =>
+  (toCheck: unknown): toCheck is T[keyof T] =>
+    Object.values(e).includes(toCheck as T[keyof T]);
 
 export type UnknownObject =
   // all types which have typeof === 'object'
@@ -23,29 +21,48 @@ export const isUnknownObject = (toCheck: unknown): toCheck is UnknownObject => {
 };
 
 /**
- * Takes one or more nullable variables as arguments.
- * If any of the arguments are null or undefined, throws a runtime error.
- * Otherwise, returns the arguments with their type asserted as NonNullable.
- * @throws {Error} If any argument is null or undefined.
+ * Takes a nullable variable argument.
+ * If the argument is null or undefined, throws a runtime error.
+ * Otherwise, returns the argument asserted as NonNullable.
+ * @throws {Error} If the first argument is null or undefined.
  */
-export function getAsserted<T>(arg: T): NonNullable<T>;
-export function getAsserted<T extends unknown[]>(
-  ...args: T[]
-): {
-  [K in keyof T]: T[K] extends null | undefined ? never : NonNullable<T[K]>;
-};
-export function getAsserted<T extends unknown[]>(...args: unknown[]) {
-  args.forEach((arg, ix) => {
+export function getAsserted<T>(
+  nullableVariable: unknown,
+  options: {
+    name?: string;
+    errorConstructor: ErrorConstructor;
+  }
+) {
+  const { errorConstructor = Error, name = 'Argument' } = options;
+  if (nullableVariable === null || nullableVariable === undefined) {
+    throw new errorConstructor(`${name} is null or undefined`);
+  }
+
+  return nullableVariable as NonNullable<T>;
+}
+
+/**
+ * Takes an array of nullable variables as an argument.
+ * If any of the array values is null or undefined, throws a runtime error.
+ * Otherwise, returns a new array with the variables asserted as NonNullable.
+ * @throws {Error} If any element in the array is null or undefined.
+ */
+export function getManyAsserted<T extends unknown[]>(
+  nullableVariables: T[],
+  options: {
+    names?: string[];
+    errorConstructor: ErrorConstructor;
+  }
+) {
+  const { errorConstructor = Error, names } = options;
+  nullableVariables.forEach((arg, ix) => {
     if (arg === null || arg === undefined) {
-      throw new Error(`Argument at index ${ix} is null or undefined`);
+      throw new errorConstructor(
+        `${names?.[ix] ?? `Argument at index ${ix}`} is null or undefined`
+      );
     }
   });
-
-  return args.length === 1
-    ? (args[0] as NonNullable<T[0]>)
-    : (args as {
-        [K in keyof T]: T[K] extends null | undefined
-          ? never
-          : NonNullable<T[K]>;
-      });
+  return nullableVariables as {
+    [K in keyof T]: T[K] extends null | undefined ? never : NonNullable<T[K]>;
+  };
 }
