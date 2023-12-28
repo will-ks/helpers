@@ -28,8 +28,8 @@ export const isUnknownObject = (toCheck: unknown): toCheck is UnknownObject => {
  * Otherwise, returns the argument asserted as NonNullable.
  * @throws {Error} If the first argument is null or undefined.
  */
-export function getAsserted<T>(
-  assertedValue: unknown,
+export function getAsserted<T extends unknown>(
+  assertedValue: T,
   options: {
     name?: string;
     errorConstructor?: ErrorConstructor;
