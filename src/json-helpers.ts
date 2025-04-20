@@ -7,6 +7,14 @@ export const isValidJSONString = (str: string) => {
   return true;
 };
 
+export const safeJsonParse = (toParse: string) => {
+  try {
+    return JSON.parse(toParse) as unknown;
+  } catch {
+    return undefined;
+  }
+};
+
 // A better JSON.stringify. Safely stringify circular references, Errors and undefined.
 export const convertToString = (toStringify: unknown) => {
   return (
